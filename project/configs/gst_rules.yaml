@@ -1,0 +1,77 @@
+# GST State Code Mapping
+state_codes:
+  "01": "Jammu & Kashmir"
+  "02": "Himachal Pradesh"
+  "03": "Punjab"
+  "04": "Chandigarh"
+  "05": "Uttarakhand"
+  "06": "Haryana"
+  "07": "Delhi"
+  "08": "Rajasthan"
+  "09": "Uttar Pradesh"
+  "10": "Bihar"
+  "11": "Sikkim"
+  "12": "Arunachal Pradesh"
+  "13": "Nagaland"
+  "14": "Manipur"
+  "15": "Mizoram"
+  "16": "Tripura"
+  "17": "Meghalaya"
+  "18": "Assam"
+  "19": "West Bengal"
+  "20": "Jharkhand"
+  "21": "Odisha"
+  "22": "Chhattisgarh"
+  "23": "Madhya Pradesh"
+  "24": "Gujarat"
+  "25": "Daman & Diu"
+  "26": "Dadra & Nagar Haveli"
+  "27": "Maharashtra"
+  "28": "Andhra Pradesh"
+  "29": "Karnataka"
+  "30": "Goa"
+  "31": "Lakshadweep"
+  "32": "Kerala"
+  "33": "Tamil Nadu"
+  "34": "Puducherry"
+  "35": "Andaman & Nicobar Islands"
+  "36": "Telangana"
+  "37": "Andhra Pradesh (New)"
+  "38": "Ladakh"
+
+# Common GST rates by service type
+gst_rates:
+  default: 18
+  it_services: 18
+  consulting: 18
+  legal: 18
+  transport: 5
+  hotel_below_1000: 0
+  hotel_1000_7500: 12
+  hotel_above_7500: 18
+  restaurant: 5
+  catering: 18
+  printing: 12
+  courier: 18
+  insurance: 18
+  telecom: 18
+  banking: 18
+  construction: 12
+  rental_commercial: 18
+  works_contract: 12
+  manpower: 18
+  security: 18
+
+# State name aliases for matching
+state_aliases:
+  "Delhi": ["New Delhi", "NCT of Delhi", "NCR"]
+  "Karnataka": ["KA"]
+  "Maharashtra": ["MH"]
+  "Tamil Nadu": ["TN"]
+  "Telangana": ["TS"]
+  "Uttar Pradesh": ["UP"]
+  "West Bengal": ["WB"]
+  "Gujarat": ["GJ"]
+  "Rajasthan": ["RJ"]
+  "Kerala": ["KL"]
+  "Andhra Pradesh": ["AP"]

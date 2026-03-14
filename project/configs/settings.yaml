@@ -1,0 +1,33 @@
+team_id: hackculture
+pdf_path: data/input/gauntlet.pdf
+vendor_master_pages: [3, 4]
+total_pages: 1000
+document_pages_start: 5
+document_pages_end: 1000
+
+hyperapi:
+  base_url: ${HYPERAPI_URL}
+  api_key: ${HYPERAPI_KEY}
+  timeout: 120
+  max_retries: 3
+  backoff_factor: 2
+
+bedrock:
+  region: us-east-1
+  model_reasoning: us.anthropic.claude-sonnet-4-6
+  model_fast: us.anthropic.claude-haiku-4-5-20251001-v1:0
+  max_tokens: 4096
+  temperature: 0.0
+
+pipeline:
+  max_workers: 4
+  batch_size: 10
+  cache_enabled: true
+  resume_enabled: true
+
+detection:
+  min_confidence: 0.7
+  easy_threshold: 0.85
+  medium_threshold: 0.75
+  evil_threshold: 0.65
+  max_findings_per_category: 30

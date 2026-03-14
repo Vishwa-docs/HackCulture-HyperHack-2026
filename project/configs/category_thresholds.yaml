@@ -1,0 +1,24 @@
+# Confidence thresholds per category
+# Higher = more selective (fewer findings, fewer false positives)
+arithmetic_error: 0.90
+billing_typo: 0.85
+duplicate_line_item: 0.92
+invalid_date: 0.95
+wrong_tax_rate: 0.80
+
+po_invoice_mismatch: 0.80
+vendor_name_typo: 0.75
+double_payment: 0.80
+ifsc_mismatch: 0.88
+duplicate_expense: 0.82
+date_cascade: 0.85
+gstin_state_mismatch: 0.90
+
+quantity_accumulation: 0.70
+price_escalation: 0.70
+balance_drift: 0.85
+circular_reference: 0.70
+triple_expense_claim: 0.72
+employee_id_collision: 0.75
+fake_vendor: 0.70
+phantom_po_reference: 0.78

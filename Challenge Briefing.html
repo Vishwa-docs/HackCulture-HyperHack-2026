@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challenge Briefing — HyperAPI Hackathon</title>
+<style>
+  :root {
+    --primary: #1a6f8a;
+    --primary-dark: #145a70;
+    --primary-light: #e8f4f8;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --easy: #10b981;
+    --medium: #f59e0b;
+    --evil: #ef4444;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --aws-orange: #ff9900;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 2.5rem 0 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(26,111,138,0.3);
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .header-logo { width: 72px; height: 72px; border-radius: 16px; background: rgba(255,255,255,0.15); padding: 8px; }
+  .header-logo img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); }
+  .header-text h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }
+  .header-text p { opacity: 0.85; font-size: 0.95rem; margin-top: 0.25rem; }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: white; }
+
+  /* Event banner */
+  .event-banner {
+    max-width: 900px;
+    margin: -1rem auto 2rem;
+    padding: 0 2rem;
+  }
+
+  .event-card {
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    padding: 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--aws-orange));
+  }
+
+  .event-meta h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+  }
+
+  .event-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .event-detail svg { flex-shrink: 0; color: var(--primary); }
+
+  .event-detail strong { font-weight: 600; }
+
+  .event-powered {
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .perks-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .perk {
+    background: var(--primary-light);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+
+  .perk h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 0.15rem;
+  }
+
+  .perk p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* Content */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 1.25rem 0 0.5rem;
+    color: var(--text);
+  }
+
+  .card p {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .card strong { font-weight: 600; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 0.5rem 0 1rem;
+  }
+
+  th {
+    background: var(--primary-light);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--border);
+  }
+
+  td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  code {
+    background: #f1f5f9;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #334155;
+  }
+
+  pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin: 0.5rem 0 1rem;
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  .tier-label {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .tier-easy { background: #d1fae5; color: #065f46; }
+  .tier-medium { background: #fef3c7; color: #92400e; }
+  .tier-evil { background: #fee2e2; color: #991b1b; }
+
+  .formula {
+    background: var(--primary-light);
+    border-left: 3px solid var(--primary);
+    padding: 0.75rem 1rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.5rem 0 1rem;
+    overflow-x: auto;
+  }
+
+  .tips-list {
+    list-style: none;
+    counter-reset: tip;
+  }
+
+  .tips-list li {
+    counter-increment: tip;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .tips-list li::before {
+    content: counter(tip);
+    background: var(--primary);
+    color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .header-inner { flex-direction: column; gap: 0.75rem; }
+    .header-logo { width: 56px; height: 56px; }
+    .header-text h1 { font-size: 1.3rem; }
+    .container, .event-banner { padding-left: 1rem; padding-right: 1rem; }
+    .event-card { grid-template-columns: 1fr; }
+    .card { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-logo"><img src="/logo.png" alt="HyperAPI"></div>
+    <div class="header-text">
+      <h1>HyperAPI Hackathon</h1>
+      <p>Stress-test HyperAPI (Alpha) against the hardest document intelligence problems in Finance &amp; Accounting.</p>
+    </div>
+  </div>
+  <a href="/" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 12L6 8l4-4"/></svg>
+    Back to Leaderboard
+  </a>
+</header>
+
+<div class="event-banner">
+  <div class="event-card">
+    <div class="event-meta">
+      <h2>The Financial Gauntlet</h2>
+      <div class="event-detail">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6h12M5 1v4m6-4v4"/></svg>
+        <span><strong>Mar 14, 2026</strong> &mdash; 12:00 PM &ndash; 6:00 PM</span>
+      </div>
+      <div class="event-detail">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5a4.5 4.5 0 014.5 4.5c0 3.5-4.5 8.5-4.5 8.5S3.5 9.5 3.5 6A4.5 4.5 0 018 1.5z"/><circle cx="8" cy="6" r="1.5"/></svg>
+        <span>JBR Techpark, Whitefield</span>
+      </div>
+      <p class="event-powered">
+        Powered by <strong>Amazon Web Services</strong> as the official infrastructure partner, with support from <strong>AWS for Startups</strong>.
+      </p>
+    </div>
+    <div class="perks-grid">
+      <div class="perk">
+        <h4>AWS Cloud Resources</h4>
+        <p>Every participant gets AWS access to build and scale</p>
+      </div>
+      <div class="perk">
+        <h4>Exclusive KIRO Access</h4>
+        <p>Faster experimentation and next-level development</p>
+      </div>
+      <div class="perk">
+        <h4>Win Enterprise Credits</h4>
+        <p>Plus early access to HyperAPI for top builders</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- The Challenge -->
+  <div class="card">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+      The Challenge
+    </h2>
+    <p>
+      You are given <strong>gauntlet.pdf</strong> &mdash; a 1,000-page Accounts Payable processing bundle for a fictional company, <strong>HyperAPI Technologies Pvt Ltd</strong>, covering FY 2025&ndash;2026.
+    </p>
+    <p>
+      Hidden inside are <strong>200 deliberate errors ("needles")</strong> across 20 categories. Your job: build an AI pipeline that finds as many as possible, as accurately as possible.
+    </p>
+    <a href="/gauntlet.pdf" style="display:inline-flex;align-items:center;gap:0.5rem;background:var(--primary);color:white;padding:0.55rem 1.25rem;border-radius:8px;text-decoration:none;font-size:0.9rem;font-weight:500;margin-top:0.25rem;transition:background 0.2s" onmouseover="this.style.background='var(--primary-dark)'" onmouseout="this.style.background='var(--primary)'">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 10V2m0 8L5 7m3 3l3-3M2 12v2h12v-2"/></svg>
+      Download gauntlet.pdf (3.3 MB)
+    </a>
+  </div>
+
+  <!-- What's in the PDF -->
+  <div class="card">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 1H4a1.5 1.5 0 00-1.5 1.5v11A1.5 1.5 0 004 15h8a1.5 1.5 0 001.5-1.5V5.5L9 1z"/><path d="M9 1v5h4.5"/></svg>
+      What's in the PDF
+    </h2>
+    <table>
+      <thead><tr><th>Pages</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Cover page</td></tr>
+        <tr><td>2</td><td>Submission format &amp; scoring rules</td></tr>
+        <tr><td>3&ndash;4</td><td><strong>Vendor Master</strong> &mdash; the authoritative list of 35 registered vendors (names, GSTINs, bank IFSCs, states). Cross-reference everything against this.</td></tr>
+        <tr><td>5&ndash;1000</td><td>~750 documents: tax invoices, purchase orders, bank statements, expense reports, credit/debit notes, receipts, quotations, delivery notes, T&amp;Cs, and filler</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Needle Categories -->
+  <div class="card">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 4.5v4l3 1.5"/></svg>
+      Needle Categories (20 types, 3 difficulty tiers)
+    </h2>
+
+    <h3><span class="tier-label tier-easy">Easy</span> 40 needles &times; 1 pt = 40 pts</h3>
+    <table>
+      <thead><tr><th>Category</th><th>Count</th><th>What to look for</th></tr></thead>
+      <tbody>
+        <tr><td><code>arithmetic_error</code></td><td>12</td><td>qty &times; rate &ne; amount, subtotal &ne; sum of lines, tax calc wrong, or grand total &ne; subtotal + tax</td></tr>
+        <tr><td><code>billing_typo</code></td><td>4</td><td>Hours logged as 0.15 (decimal) when it means 0:15 = 0.25 hrs. The rate &times; wrong qty gives wrong amount</td></tr>
+        <tr><td><code>duplicate_line_item</code></td><td>4</td><td>Exact same line item appears twice in one invoice, doubling the charge</td></tr>
+        <tr><td><code>invalid_date</code></td><td>10</td><td>Impossible dates: Feb 31, Sep 31, day 00, day 32, Feb 29 in non-leap year</td></tr>
+        <tr><td><code>wrong_tax_rate</code></td><td>10</td><td>GST rate doesn't match the HSN/SAC code (e.g., freight at 18% instead of 5%)</td></tr>
+      </tbody>
+    </table>
+
+    <h3><span class="tier-label tier-medium">Medium</span> 60 needles &times; 3 pts = 180 pts</h3>
+    <table>
+      <thead><tr><th>Category</th><th>Count</th><th>What to look for</th></tr></thead>
+      <tbody>
+        <tr><td><code>po_invoice_mismatch</code></td><td>15</td><td>Invoice qty or rate differs from the linked Purchase Order</td></tr>
+        <tr><td><code>vendor_name_typo</code></td><td>10</td><td>Vendor name on invoice is misspelled vs the Vendor Master (pages 3&ndash;4)</td></tr>
+        <tr><td><code>double_payment</code></td><td>10</td><td>Same payment (vendor, amount, reference) appears in <strong>two different</strong> bank statements months apart</td></tr>
+        <tr><td><code>ifsc_mismatch</code></td><td>5</td><td>Bank IFSC on invoice doesn't match vendor's registered IFSC in Vendor Master</td></tr>
+        <tr><td><code>duplicate_expense</code></td><td>10</td><td>Same expense entry claimed in two different expense reports</td></tr>
+        <tr><td><code>date_cascade</code></td><td>5</td><td>Invoice date is <strong>before</strong> its own PO date (can't invoice before the PO exists)</td></tr>
+        <tr><td><code>gstin_state_mismatch</code></td><td>5</td><td>First 2 digits of GSTIN (state code) don't match the vendor's address state</td></tr>
+      </tbody>
+    </table>
+
+    <h3><span class="tier-label tier-evil">Evil</span> 100 needles &times; 7 pts = 700 pts</h3>
+    <table>
+      <thead><tr><th>Category</th><th>Count</th><th>What to look for</th></tr></thead>
+      <tbody>
+        <tr><td><code>quantity_accumulation</code></td><td>35</td><td>Sum of quantities across 3&ndash;5 invoices exceeds the PO quantity by 20%</td></tr>
+        <tr><td><code>price_escalation</code></td><td>10</td><td>All 4 invoices against a PO charge rates exceeding the contracted PO rate</td></tr>
+        <tr><td><code>balance_drift</code></td><td>15</td><td>Bank statement opening balance &ne; previous month's closing balance</td></tr>
+        <tr><td><code>circular_reference</code></td><td>8</td><td>Credit/debit notes form a loop (A&rarr;B&rarr;C&rarr;A) &mdash; none traces back to a real invoice</td></tr>
+        <tr><td><code>triple_expense_claim</code></td><td>10</td><td>Same hotel stay claimed in 3 different expense reports</td></tr>
+        <tr><td><code>employee_id_collision</code></td><td>7</td><td>Same Employee ID used by two different people across expense reports</td></tr>
+        <tr><td><code>fake_vendor</code></td><td>10</td><td>Invoice from a vendor that doesn't exist in the Vendor Master</td></tr>
+        <tr><td><code>phantom_po_reference</code></td><td>5</td><td>Invoice cites a PO number that doesn't exist anywhere in the dataset</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Total: 200 needles, 920 max points</strong></p>
+  </div>
+
+  <!-- Submission Format -->
+  <div class="card">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 14V8m0 0L8 12m4-4l4 4M2 2h12v4H2z"/></svg>
+      Submission Format
+    </h2>
+    <p>Submit a single JSON file:</p>
+<pre><code>{
+  "team_id": "your_team_name",
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "category": "arithmetic_error",
+      "pages": [47],
+      "document_refs": ["INV-2025-0042"],
+      "description": "Line item 1 total should be ...",
+      "reported_value": "130,123.87",
+      "correct_value": "129,623.87"
+    }
+  ]
+}</code></pre>
+  </div>
+
+  <!-- Scoring -->
+  <div class="card">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 14V6l4-4h4l4 4v8H2z"/><path d="M6 14V9h4v5"/></svg>
+      Scoring
+    </h2>
+
+    <h3>What's scored vs not</h3>
+    <table>
+      <thead><tr><th>Field</th><th>Scored?</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>category</code></td><td><strong>Yes</strong></td><td>Must match exactly. Used for matching your finding to an answer key needle.</td></tr>
+        <tr><td><code>document_refs</code></td><td><strong>Yes</strong></td><td>&ge;50% overlap with answer key required for a match.</td></tr>
+        <tr><td><code>pages</code></td><td><strong>Yes</strong></td><td>+/&minus;1 page tolerance.</td></tr>
+        <tr><td><code>reported_value</code></td><td><strong>Yes</strong></td><td>5% numeric tolerance (or exact string match).</td></tr>
+        <tr><td><code>correct_value</code></td><td><strong>Yes</strong></td><td>5% numeric tolerance (or exact string match).</td></tr>
+        <tr><td><code>finding_id</code></td><td>No</td><td>Your internal tracking ID.</td></tr>
+        <tr><td><code>description</code></td><td>No</td><td>Free text for human review. Not scored.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>How scoring works</h3>
+    <p>Each finding is first <strong>matched</strong> to an answer key needle (same <code>category</code> + &ge;50% <code>document_refs</code> overlap). Then:</p>
+
+    <div class="formula">needle_score = difficulty_weight &times; (0.4 &times; detection + 0.3 &times; localization + 0.3 &times; diagnosis)</div>
+
+    <table>
+      <thead><tr><th>Component</th><th>Weight</th><th>How it's calculated</th></tr></thead>
+      <tbody>
+        <tr><td>Detection</td><td>0.4</td><td>1.0 if matched, 0.0 if not</td></tr>
+        <tr><td>Localization</td><td>0.3</td><td>Fraction of expected pages you identified (&pm;1 tolerance)</td></tr>
+        <tr><td>Diagnosis</td><td>0.3</td><td>0.5 &times; (reported_value match) + 0.5 &times; (correct_value match)</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Difficulty weights:</strong> easy = 1, medium = 3, evil = 7</p>
+    <p><strong>False positive penalty:</strong> &minus;0.5 per unmatched finding, capped at 20% of your earned score.</p>
+
+    <h3>Example</h3>
+    <p>You find an evil needle perfectly: <code>7 &times; (0.4&times;1.0 + 0.3&times;1.0 + 0.3&times;1.0) = 7.0 pts</code></p>
+    <p>You find it but wrong page and no values: <code>7 &times; (0.4&times;1.0 + 0.3&times;0.0 + 0.3&times;0.0) = 2.8 pts</code></p>
+  </div>
+
+  <!-- Tips -->
+  <div class="card">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1a5 5 0 013 9v2.5a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 015 12.5V10a5 5 0 013-9z"/><path d="M6 14.5h4"/></svg>
+      Tips
+    </h2>
+    <ol class="tips-list">
+      <li><span><strong>Start with the Vendor Master (pages 3&ndash;4).</strong> Many needles are cross-reference checks against it.</span></li>
+      <li><span><strong>Easy needles are single-document checks</strong> &mdash; arithmetic, dates, tax rates. Good for quick wins.</span></li>
+      <li><span><strong>Medium needles require comparing 2 documents</strong> &mdash; PO vs invoice, vendor master vs invoice, two expense reports.</span></li>
+      <li><span><strong>Evil needles require aggregating across 3&ndash;5+ documents</strong> scattered across hundreds of pages &mdash; cumulative quantities, price trends, circular references.</span></li>
+      <li><span><strong>Don't over-report.</strong> False positives cost you points. Be precise.</span></li>
+      <li><span><strong>Document IDs matter.</strong> <code>INV-2025-00042</code> is not the same as <code>INV-2025-0042</code>. Copy them exactly.</span></li>
+    </ol>
+  </div>
+
+</div>
+</body>
+</html>
